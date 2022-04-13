@@ -1,0 +1,49 @@
+.editor {
+    margin-top: 50px;
+}
+
+.editor .canvas-container {
+    flex-basis: 50%;
+}
+
+.editor .tools {
+    flex-basis: 50%;
+}
+
+.tools .text-line input {
+    width: 100%;
+    height: 2.5rem;
+    font-size: 1.5rem;
+    padding-inline-start: 15px;
+    border: 0;
+    outline: 0;
+    border-radius: 5rem;
+    background-color: rgb(75, 74, 74);
+    color: white;
+}
+
+.tools .btn-tools {
+    background-color: rgb(212, 212, 212);
+    padding: 0;
+    width: 50px;
+    height: 50px;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+.tools .btn-tools:hover {
+    background-color: gray;
+}
+
+.tools .tools-btn-container {
+    margin: 1rem 0;
+    grid-template-columns: repeat(5, 1fr);
+    grid-template-rows: repeat(3, 1fr);
+    row-gap: 10px;
+    justify-items: center;
+}
+
+.tools .tools-btn-container .fonts {
+    grid-column: span 3;
+    justify-self: stretch;
+}

@@ -19,7 +19,7 @@
         </nav>
       </div>
     </header>
-    <section class="search main-layout flex space-between">
+    <section class="search main-layout flex space-between hidden">
       <form onsubmit="handleSearch()">
         <input
           type="text"
@@ -52,7 +52,66 @@
         <img src="img/5.jpg" alt="" srcset="" />
         <img src="img/6.jpg" alt="" srcset="" />
       </section>
-      <section class="editor"></section>
+      <section class="editor flex">
+        <div class="canvas-container flex flex-center">
+          <canvas
+            width="200px"
+            height="300px"
+            style="border: 1px solid black"
+          ></canvas>
+        </div>
+        <div class="tools">
+          <form class="text-line">
+            <input type="text" placeholder="Enter your text here..." />
+          </form>
+          <div class="tools-btn-container grid">
+            <button class="btn btn-tools">
+              <img src="img/ico/arrow-up.png" alt="" />
+            </button>
+            <button class="btn btn-tools">
+              <img src="img/ico/arrow-up.png" alt="" />
+            </button>
+            <button class="btn btn-tools">
+              <img src="img/ico/switch-arrows.png" alt="" />
+            </button>
+            <button class="btn btn-tools">
+              <img src="img/ico/plus.png" alt="" />
+            </button>
+            <button class="btn btn-tools">
+              <img src="img/ico/trash.png" alt="" />
+            </button>
+            <button class="btn btn-tools">
+              <img src="img/ico/font-increase.png" alt="" />
+            </button>
+            <button class="btn btn-tools">
+              <img src="img/ico/font-decrease.png" alt="" />
+            </button>
+            <button class="btn btn-tools">
+              <img src="img/ico/align-left.png" alt="" />
+            </button>
+            <button class="btn btn-tools">
+              <img src="img/ico/align-center.png" alt="" />
+            </button>
+            <button class="btn btn-tools">
+              <img src="img/ico/align-right.png" alt="" />
+            </button>
+            <select class="fonts">
+              <option value="font">font</option>
+              <option value="font">font</option>
+              <option value="font">font</option>
+              <option value="font">font</option>
+              <option value="font">font</option>
+            </select>
+            <button class="btn btn-tools">
+              <img src="img/ico/bold.png" alt="" />
+            </button>
+            <button class="btn btn-tools">
+              <img src="img/ico/color.png" alt="" />
+            </button>
+          </div>
+          <button class="btn btn-share">Share</button>
+        </div>
+      </section>
     </main>
   </body>
 </html>
