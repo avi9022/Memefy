@@ -117,7 +117,7 @@ function renderGallery() {
   const elGallery = document.querySelector('.main-gallery')
 
   if (!imgs || imgs.length === 0) {
-    elMyMemes.innerHTML = '<span>There are no images available</span>'
+    elGallery.innerHTML = '<span>There are no images available</span>'
     return
   }
   let strHTML = ''
