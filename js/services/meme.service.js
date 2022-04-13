@@ -28,6 +28,7 @@ function imgChoice(id) {
       align: 'left',
       color: 'black',
       pos: { x: 50, y: 50 },
+      isDragging: false,
     },
   ]
 }
@@ -77,6 +78,47 @@ function changeFontColor(color) {
   line.color = color
 }
 
+function addLine() {
+  const lineY =
+    gMeme.lines.length === 0 ? '50' : gMeme.lines.length === 1 ? 350 : 200
+  const line = {
+    txt: 'My next line',
+    size: 48,
+    font: 'impact',
+    isBold: false,
+    align: 'left',
+    color: 'black',
+    pos: {
+      x: 50,
+      y: lineY,
+    },
+  }
+
+  gMeme.lines.push(line)
+  gMeme.selectedLineIdx = gMeme.lines.length - 1
+}
+
+function switchLines() {
+  gMeme.selectedLineIdx =
+    gMeme.selectedLineIdx + 1 > gMeme.lines.length - 1
+      ? 0
+      : gMeme.selectedLineIdx + 1
+}
+
+function deleteLine() {
+  gMeme.lines.splice(gMeme.selectedLineIdx, 1)
+}
+
+function startDraging() {
+  gMeme.isDragging = true
+}
+
+function stopDraging() {
+  gMeme.isDragging = false
+}
+
+// Getters
+
 function getImgById(id) {
   return gImgs.find((img) => img.id === id)
 }
@@ -91,4 +133,16 @@ function getTxtLines() {
 
 function getSelectedLine() {
   return gMeme.lines[gMeme.selectedLineIdx]
+}
+
+function getSelectedLineIdx() {
+  return gMeme.selectedLineIdx
+}
+
+function setSelectedLine(idx) {
+  gMeme.selectedLineIdx = idx
+}
+
+function getLineText() {
+  return gMeme.lines[gMeme.selectedLineIdx].txt
 }

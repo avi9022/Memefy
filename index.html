@@ -7,7 +7,7 @@
     <link rel="stylesheet" href="styles/styles.css" />
     <title>Memify</title>
   </head>
-  <body>
+  <body onload="init()">
     <header class="page-heading">
       <div class="page-heading-content main-layout flex space-between">
         <div class="logo">Me<span>me</span>fy</div>
@@ -80,13 +80,21 @@
               />
             </button>
             <button class="btn btn-tools">
-              <img src="img/ico/switch-arrows.png" alt="" />
+              <img
+                src="img/ico/switch-arrows.png"
+                alt=""
+                onclick="handleSwitchLines()"
+              />
             </button>
-            <button class="btn btn-tools">
+            <button class="btn btn-tools" onclick="handleAddLine()">
               <img src="img/ico/plus.png" alt="" />
             </button>
             <button class="btn btn-tools">
-              <img src="img/ico/trash.png" alt="" />
+              <img
+                src="img/ico/trash.png"
+                alt=""
+                onclick="handleDeleteLine()"
+              />
             </button>
             <button class="btn btn-tools">
               <img

@@ -1,9 +1,14 @@
 'use strict'
 
+function init() {
+  addEventListeners()
+}
+
 function handleImgChoice(imgId) {
   showEditor()
   imgChoice(imgId)
   handleCanvasRender()
+  addEventListeners()
 }
 
 function handleTxtChange(val) {
@@ -51,10 +56,29 @@ function handleTxtColorChange(color) {
   handleCanvasRender()
 }
 
+function handleAddLine() {
+  addLine()
+  handleCanvasRender()
+  document.querySelector('.text-line input').value = getLineText()
+}
+
+function handleSwitchLines() {
+  switchLines()
+  handleCanvasRender()
+  document.querySelector('.text-line input').value = getLineText()
+}
+
+function handleDeleteLine() {
+  deleteLine()
+  switchLines()
+  handleCanvasRender()
+}
+
 function handleCanvasRender() {
   const img = getSelectedImg()
   const txtLines = getTxtLines()
-  renderCanvas(img, txtLines)
+  const selectedLineIdx = getSelectedLineIdx()
+  renderCanvas(img, txtLines, selectedLineIdx)
 }
 
 function showGallery() {
@@ -65,4 +89,41 @@ function showGallery() {
 function showEditor() {
   document.querySelector('.gallery').classList.add('hidden')
   document.querySelector('.editor').classList.remove('hidden')
+}
+
+// Event Listeners
+
+function addEventListeners() {
+  addMouseListeners()
+  addTouchListeners()
+}
+
+function addMouseListeners() {
+  gElCanvas.addEventListener('mousemove', handleDragObject)
+  gElCanvas.addEventListener('mousedown', handelSelectObject)
+  gElCanvas.addEventListener('mouseup', handleStopDraging)
+}
+
+function addTouchListeners() {
+  gElCanvas.addEventListener('touchmove', handleDragObject)
+  gElCanvas.addEventListener('touchstart', handelSelectObject)
+  gElCanvas.addEventListener('touchend', selectObject)
+}
+
+function handelSelectObject(ev) {
+  const idx = selectObject(ev)
+  if (idx >= 0) {
+    setSelectedLine(idx)
+    document.querySelector('.text-line input').value = getLineText()
+    startDraging()
+    handleCanvasRender()
+  }
+}
+
+function handleDragObject(ev) {
+  console.log(ev)
+}
+
+function handleStopDraging() {
+  stopDraging()
 }
