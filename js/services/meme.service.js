@@ -1,5 +1,7 @@
 'use strict'
 
+const DB_KEY = 'savedMemesDB'
+
 const gImgs = [
   {
     id: 1,
@@ -14,23 +16,24 @@ const gImgs = [
 ]
 const gMeme = {}
 let gMouseStartPos
+let gSavedMemes
 
 function imgChoice(id) {
+  gMeme.lines = []
+  if (id === 'surprise') {
+    gMeme.selectedImgId = gImgs[getRandomInt(0, gImgs.length - 1)].id
+
+    const randNumOfLines = getRandomInt(1, 2)
+    for (let i = 0; i < randNumOfLines; i++) {
+      addLine('random text', getRandomInt(16, 60), getRandomColorHex())
+    }
+  } else {
+    gMeme.selectedImgId = id
+    addLine('My first meme', 48, 'black')
+  }
+
   // Initializing the current meme
-  gMeme.selectedImgId = id
   gMeme.selectedLineIdx = 0
-  gMeme.lines = [
-    {
-      txt: 'My first meme',
-      size: 48,
-      font: 'impact',
-      isBold: false,
-      align: 'left',
-      color: 'black',
-      pos: { x: 50, y: 50 },
-      isDragging: false,
-    },
-  ]
 }
 
 function updateLineTxt(txt) {
@@ -78,16 +81,16 @@ function changeFontColor(color) {
   line.color = color
 }
 
-function addLine() {
+function addLine(txt = 'My next line', size, color) {
   const lineY =
-    gMeme.lines.length === 0 ? '50' : gMeme.lines.length === 1 ? 350 : 200
+    gMeme.lines.length === 0 ? 50 : gMeme.lines.length === 1 ? 350 : 200
   const line = {
-    txt: 'My next line',
-    size: 48,
+    txt: txt,
+    size,
     font: 'impact',
     isBold: false,
     align: 'left',
-    color: 'black',
+    color,
     pos: {
       x: 50,
       y: lineY,
@@ -139,6 +142,10 @@ function getLineText() {
   return gMeme.lines[gMeme.selectedLineIdx].txt
 }
 
+function getSavedMemes() {
+  return gSavedMemes
+}
+
 // Dragging
 function startDragging(ev) {
   gMeme.isDragging = true
@@ -158,4 +165,24 @@ function dragObject(ev) {
   line.pos.y += diff.y
 
   gMouseStartPos = currMousePos
+}
+
+// Storage
+
+function saveMeme() {
+  gSavedMemes.push(gMeme)
+  console.log(gSavedMemes)
+  _saveMemesToStorage()
+}
+
+function loadSavedMemes() {
+  gSavedMemes = _loadMemesFromStorage() ? _loadMemesFromStorage() : []
+}
+
+function _saveMemesToStorage() {
+  saveToStorage(DB_KEY, gSavedMemes)
+}
+
+function _loadMemesFromStorage() {
+  return loadFromStorage(DB_KEY)
 }

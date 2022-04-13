@@ -2,6 +2,8 @@
 
 function init() {
   addEventListeners()
+  loadSavedMemes()
+  renderSavedMemes()
 }
 
 function handleImgChoice(imgId) {
@@ -81,6 +83,16 @@ function handleCanvasRender() {
   renderCanvas(img, txtLines, selectedLineIdx)
 }
 
+function handleSurpriseMeme() {
+  handleImgChoice('surprise')
+}
+
+function handleSaveMeme() {
+  saveMeme()
+}
+
+// Display
+
 function showGallery() {
   document.querySelector('.gallery').classList.remove('hidden')
   document.querySelector('.editor').classList.add('hidden')
@@ -89,6 +101,19 @@ function showGallery() {
 function showEditor() {
   document.querySelector('.gallery').classList.add('hidden')
   document.querySelector('.editor').classList.remove('hidden')
+}
+
+function renderSavedMemes() {
+  const memes = getSavedMemes()
+  console.log(memes)
+  let strHTML = ''
+  const elements = memes.map((meme, idx) => {
+    return `<img onclick="handleImgChoice(${meme.selectedImgId})" src="img/${meme.selectedImgId}.jpg" alt="saved img number ${idx}" />`
+  })
+
+  strHTML += elements.join('')
+
+  document.querySelector('.my-memes .gallery').innerHTML = strHTML
 }
 
 // Event Listeners

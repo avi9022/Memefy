@@ -22,3 +22,31 @@ function getDist(point1, point2) {
     y: point2.y - point1.y,
   }
 }
+
+function getRandomInt(min, max) {
+  min = Math.ceil(min)
+  max = Math.floor(max)
+  return Math.floor((max - min + 1) * Math.random() + min)
+}
+
+function getRandomColor() {
+  var red = getRandomInt(0, 255)
+  var green = getRandomInt(0, 255)
+  var blue = getRandomInt(0, 255)
+  return `rgb(${red},${green},${blue})`
+}
+
+function getRandomColorHex() {
+  const randomColor = Math.floor(Math.random() * 16777215).toString(16)
+  return '#' + randomColor
+}
+
+function _makeId(length = 5) {
+  var txt = ''
+  const possible =
+    'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789'
+  for (var i = 0; i < length; i++) {
+    txt += possible.charAt(Math.floor(Math.random() * possible.length))
+  }
+  return txt
+}

@@ -43,10 +43,10 @@
 .btn {
     border: 0;
     padding: 0.5rem 1rem;
-    background-color: var(--secondary-clr);
+    background-color: var(--primary-clr);
     border-radius: 10px;
     color: white;
-    font-size: 1rem;
+    font-size: 1.5rem;
 }
 
 .empty-btn {
