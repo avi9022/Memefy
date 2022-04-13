@@ -22,11 +22,12 @@
       </div>
     </header>
     <section class="search main-layout flex space-between">
-      <form onsubmit="handleSearch()">
+      <form>
         <input
           type="text"
           class="search-bar"
           placeholder="Enter search keayword"
+          oninput="handleSearch(this.value)"
         />
         <button class="empty-btn search-btn" type="submit">
           <img src="img/ico/search.png" alt="search icon" srcset="" />
@@ -46,17 +47,7 @@
       </div>
     </section>
     <main class="page-content main-layout">
-      <section class="gallery grid">
-        <img onclick="handleImgChoice(1)" src="img/1.jpg" alt="" srcset="" />
-        <img onclick="handleImgChoice(2)" src="img/2.jpg" alt="" srcset="" />
-        <img src="img/3.jpg" alt="" srcset="" />
-        <img src="img/4.jpg" alt="" srcset="" />
-        <img src="img/5.jpg" alt="" srcset="" />
-        <img src="img/6.jpg" alt="" srcset="" />
-        <button class="btn surprise-btn" onclick="handleSurpriseMeme()">
-          Surprise Me!
-        </button>
-      </section>
+      <section class="main-gallery gallery grid"></section>
       <section class="editor flex hidden">
         <div class="canvas-container flex flex-center">
           <canvas width="400px" height="300px"></canvas>

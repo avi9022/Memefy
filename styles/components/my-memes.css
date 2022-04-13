@@ -1,3 +1,11 @@
 .my-memes {
     padding-bottom: 50px;
 }
+
+.my-memes h2 {
+    font-size: 2rem;
+}
+
+.my-memes .no-memes {
+    font-size: 1.5rem;
+}

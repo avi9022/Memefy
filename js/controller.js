@@ -3,12 +3,20 @@
 function init() {
   addEventListeners()
   loadSavedMemes()
+  renderGallery()
   renderSavedMemes()
 }
 
 function handleImgChoice(imgId) {
   showEditor()
   imgChoice(imgId)
+  handleCanvasRender()
+  addEventListeners()
+}
+
+function handleMemeFromStorage(idx) {
+  showEditor()
+  setCurrMemeFromStorage(idx)
   handleCanvasRender()
   addEventListeners()
 }
@@ -89,6 +97,7 @@ function handleSurpriseMeme() {
 
 function handleSaveMeme() {
   saveMeme()
+  renderSavedMemes()
 }
 
 // Display
@@ -103,17 +112,43 @@ function showEditor() {
   document.querySelector('.editor').classList.remove('hidden')
 }
 
+function renderGallery() {
+  const imgs = getImgs()
+  const elGallery = document.querySelector('.main-gallery')
+
+  if (!imgs || imgs.length === 0) {
+    elMyMemes.innerHTML = '<span>There are no images available</span>'
+    return
+  }
+  let strHTML = ''
+  const elements = imgs.map((img, idx) => {
+    return `<img onclick="handleImgChoice(${img.id})" src="${img.url}" alt="image number ${idx}" />`
+  })
+
+  strHTML += elements.join('')
+  strHTML += `        <button class="btn surprise-btn" onclick="handleSurpriseMeme()">
+  Surprise Me!
+</button>`
+
+  elGallery.innerHTML = strHTML
+}
+
 function renderSavedMemes() {
   const memes = getSavedMemes()
-  console.log(memes)
+  const elMyMemes = document.querySelector('.my-memes .gallery')
+
+  if (!memes || memes.length === 0) {
+    elMyMemes.innerHTML = '<span class="no-memes">You have no memes????</span>'
+    return
+  }
   let strHTML = ''
   const elements = memes.map((meme, idx) => {
-    return `<img onclick="handleImgChoice(${meme.selectedImgId})" src="img/${meme.selectedImgId}.jpg" alt="saved img number ${idx}" />`
+    return `<img onclick="handleMemeFromStorage(${idx})" src="img/${meme.selectedImgId}.jpg" alt="saved img number ${idx}" />`
   })
 
   strHTML += elements.join('')
 
-  document.querySelector('.my-memes .gallery').innerHTML = strHTML
+  elMyMemes.innerHTML = strHTML
 }
 
 // Event Listeners

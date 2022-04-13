@@ -13,12 +13,43 @@ const gImgs = [
     url: 'img/2.jpg',
     keywords: ['funny', 'dog'],
   },
+  {
+    id: 3,
+    url: 'img/3.jpg',
+    keywords: ['funny', 'dog', 'baby', 'babies'],
+  },
+  {
+    id: 4,
+    url: 'img/4.jpg',
+    keywords: ['funny', 'cat', 'computer', 'sleep'],
+  },
+  {
+    id: 5,
+    url: 'img/5.jpg',
+    keywords: ['funny', 'kid', 'sea', 'angry'],
+  },
+  {
+    id: 6,
+    url: 'img/6.jpg',
+    keywords: ['funny', 'man', 'hair', 'explain', 'confused'],
+  },
+  {
+    id: 7,
+    url: 'img/7.jpg',
+    keywords: ['funny', 'baby', 'surprised', 'chair'],
+  },
+  {
+    id: 8,
+    url: 'img/8.jpg',
+    keywords: ['funny', 'man', 'hat', 'tell me more', 'tie'],
+  },
 ]
-const gMeme = {}
+let gMeme
 let gMouseStartPos
 let gSavedMemes
 
 function imgChoice(id) {
+  gMeme = {}
   gMeme.lines = []
   if (id === 'surprise') {
     gMeme.selectedImgId = gImgs[getRandomInt(0, gImgs.length - 1)].id
@@ -31,6 +62,7 @@ function imgChoice(id) {
     gMeme.selectedImgId = id
     addLine('My first meme', 48, 'black')
   }
+  gMeme.isFromStorage = false
 
   // Initializing the current meme
   gMeme.selectedLineIdx = 0
@@ -81,7 +113,7 @@ function changeFontColor(color) {
   line.color = color
 }
 
-function addLine(txt = 'My next line', size, color) {
+function addLine(txt = 'My next line', size = 40, color = 'black') {
   const lineY =
     gMeme.lines.length === 0 ? 50 : gMeme.lines.length === 1 ? 350 : 200
   const line = {
@@ -110,6 +142,11 @@ function switchLines() {
 
 function deleteLine() {
   gMeme.lines.splice(gMeme.selectedLineIdx, 1)
+}
+
+function setCurrMemeFromStorage(idx) {
+  gMeme = gSavedMemes[idx]
+  gMeme.isFromStorage = true
 }
 
 // Getters
@@ -146,6 +183,10 @@ function getSavedMemes() {
   return gSavedMemes
 }
 
+function getImgs() {
+  return gImgs
+}
+
 // Dragging
 function startDragging(ev) {
   gMeme.isDragging = true
@@ -170,8 +211,12 @@ function dragObject(ev) {
 // Storage
 
 function saveMeme() {
-  gSavedMemes.push(gMeme)
-  console.log(gSavedMemes)
+  if (gMeme.isFromStorage) {
+    gSavedMemes[gMeme.idxInStorage] = gMeme
+  } else {
+    gMeme.idxInStorage = gSavedMemes.length
+    gSavedMemes.push(gMeme)
+  }
   _saveMemesToStorage()
 }
 
