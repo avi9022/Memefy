@@ -49,8 +49,16 @@ let gMouseStartPos
 let gSavedMemes
 
 function imgChoice(id) {
+  // Initializing the current meme
   gMeme = {}
   gMeme.lines = []
+  gMeme.selectedObjectIdx = {
+    line: 0,
+    sticker: null,
+  }
+  gMeme.stickers = []
+  gMeme.isFromStorage = false
+
   if (id === 'surprise') {
     gMeme.selectedImgId = gImgs[getRandomInt(0, gImgs.length - 1)].id
 
@@ -62,54 +70,50 @@ function imgChoice(id) {
     gMeme.selectedImgId = id
     addLine('My first meme', 48, 'black')
   }
-  gMeme.isFromStorage = false
-
-  // Initializing the current meme
-  gMeme.selectedLineIdx = 0
 }
 
 function updateLineTxt(txt) {
-  const line = getSelectedLine()
+  const line = getSelectedObject()
   line.txt = txt
 }
 
 function moveTxtLineUp() {
-  const line = getSelectedLine()
+  const line = getSelectedObject()
   line.pos.y -= 5
 }
 
 function moveTxtLineDown() {
-  const line = getSelectedLine()
+  const line = getSelectedObject()
   line.pos.y += 5
 }
 
 function increaseFont() {
-  const line = getSelectedLine()
+  const line = getSelectedObject()
   line.size += 1
 }
 
 function decreaseFont() {
-  const line = getSelectedLine()
+  const line = getSelectedObject()
   line.size -= 1
 }
 
 function alignTxt(val) {
-  const line = getSelectedLine()
+  const line = getSelectedObject()
   line.align = val
 }
 
 function changeFont(font) {
-  const line = getSelectedLine()
+  const line = getSelectedObject()
   line.font = font
 }
 
 function toggleBoldTxt() {
-  const line = getSelectedLine()
+  const line = getSelectedObject()
   line.isBold = !line.isBold
 }
 
 function changeFontColor(color) {
-  const line = getSelectedLine()
+  const line = getSelectedObject()
   line.color = color
 }
 
@@ -130,23 +134,71 @@ function addLine(txt = 'My next line', size = 40, color = 'black') {
   }
 
   gMeme.lines.push(line)
-  gMeme.selectedLineIdx = gMeme.lines.length - 1
+  gMeme.selectedObjectIdx.line = gMeme.lines.length - 1
 }
 
 function switchLines() {
-  gMeme.selectedLineIdx =
-    gMeme.selectedLineIdx + 1 > gMeme.lines.length - 1
+  gMeme.selectedObjectIdx.line =
+    gMeme.selectedObjectIdx.line + 1 > gMeme.lines.length - 1
       ? 0
-      : gMeme.selectedLineIdx + 1
+      : gMeme.selectedObjectIdx.line + 1
 }
 
 function deleteLine() {
-  gMeme.lines.splice(gMeme.selectedLineIdx, 1)
+  gMeme.lines.splice(gMeme.selectedObjectIdx.line, 1)
 }
 
 function setCurrMemeFromStorage(idx) {
   gMeme = gSavedMemes[idx]
   gMeme.isFromStorage = true
+}
+
+function addSticker(sticker) {
+  sticker.pos = { x: 100, y: 100 }
+  sticker.width = 100
+  sticker.height = 100
+  gMeme.stickers.push(sticker)
+}
+
+function selectLine(ev) {
+  const mousePos = getEvPos(ev)
+  const lines = getTxtLines()
+  return lines.findIndex((line) => checkLineSelection(line, mousePos))
+}
+
+function setSelectedLine(idx) {
+  gMeme.selectedObjectIdx.line = idx
+  gMeme.selectedObjectIdx.sticker = null
+}
+function setSelectedSticker(idx) {
+  gMeme.selectedObjectIdx.sticker = idx
+  gMeme.selectedObjectIdx.line = null
+}
+
+function selectSticker(ev) {
+  const mousePos = getEvPos(ev)
+  const stickers = gMeme.stickers
+  return stickers.findIndex((sticker) =>
+    checkStickerSelection(sticker, mousePos)
+  )
+}
+
+function checkLineSelection({ pos, width, size }, mousePos) {
+  return (
+    mousePos.x >= pos.x &&
+    mousePos.x <= pos.x + width &&
+    mousePos.y <= pos.y &&
+    mousePos.y >= pos.y - size
+  )
+}
+
+function checkStickerSelection({ pos, width, height }, mousePos) {
+  return (
+    mousePos.x >= pos.x &&
+    mousePos.x <= pos.x + width &&
+    mousePos.y >= pos.y &&
+    mousePos.y <= pos.y + height
+  )
 }
 
 // Getters
@@ -163,20 +215,20 @@ function getTxtLines() {
   return gMeme.lines
 }
 
-function getSelectedLine() {
-  return gMeme.lines[gMeme.selectedLineIdx]
+function getSelectedObject() {
+  if (gMeme.selectedObjectIdx.line !== null) {
+    return gMeme.lines[gMeme.selectedObjectIdx.line]
+  } else if (gMeme.selectedObjectIdx.sticker !== null) {
+    return gMeme.stickers[gMeme.selectedObjectIdx.sticker]
+  }
 }
 
-function getSelectedLineIdx() {
-  return gMeme.selectedLineIdx
-}
-
-function setSelectedLine(idx) {
-  gMeme.selectedLineIdx = idx
+function getSelectedObjects() {
+  return gMeme.selectedObjectIdx
 }
 
 function getLineText() {
-  return gMeme.lines[gMeme.selectedLineIdx].txt
+  return gMeme.lines[gMeme.selectedObjectIdx.line].txt
 }
 
 function getSavedMemes() {
@@ -185,6 +237,10 @@ function getSavedMemes() {
 
 function getImgs() {
   return gImgs
+}
+
+function getAddedStickers() {
+  return gMeme.stickers
 }
 
 // Dragging
@@ -201,9 +257,9 @@ function dragObject(ev) {
   if (!gMeme.isDragging) return
   const currMousePos = getEvPos(ev)
   const diff = getDist(gMouseStartPos, currMousePos)
-  const line = getSelectedLine()
-  line.pos.x += diff.x
-  line.pos.y += diff.y
+  const selectedObject = getSelectedObject()
+  selectedObject.pos.x += diff.x
+  selectedObject.pos.y += diff.y
 
   gMouseStartPos = currMousePos
 }

@@ -1,0 +1,36 @@
+.stickers-container {
+    grid-column: span 5;
+    height: 100px;
+    width: 100%;
+    border-radius: 5px;
+    background-color: #d4d4d4;
+}
+
+.stickers-container .sticker-arrow {
+    height: 100%;
+    transition: all 0.3s;
+}
+
+.stickers-container .sticker-arrow.right {
+    border-top-right-radius: 5px;
+    border-bottom-right-radius: 5px;
+}
+
+.stickers-container .sticker-arrow.left {
+    border-top-left-radius: 5px;
+    border-bottom-left-radius: 5px;
+
+}
+
+.stickers-container .sticker-arrow:hover {
+    background-color: gray;
+}
+
+.stickers-container .stickers img {
+    max-width: 80px;
+    transition: all 0.3s;
+}
+
+.stickers-container .stickers img:hover {
+    transform: scale(1.1);
+}

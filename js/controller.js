@@ -6,6 +6,7 @@ function init() {
   const imgs = getImgs()
   renderGallery(imgs)
   renderSavedMemes()
+  initStickers()
 }
 
 // Handlers
@@ -14,6 +15,7 @@ function handleImgChoice(imgId) {
   showEditor()
   imgChoice(imgId)
   handleCanvasRender()
+  renderStickers()
   addEventListeners()
 }
 
@@ -21,6 +23,7 @@ function handleMemeFromStorage(idx) {
   showEditor()
   setCurrMemeFromStorage(idx)
   handleCanvasRender()
+  renderStickers()
   addEventListeners()
 }
 
@@ -90,8 +93,9 @@ function handleDeleteLine() {
 function handleCanvasRender() {
   const img = getSelectedImg()
   const txtLines = getTxtLines()
-  const selectedLineIdx = getSelectedLineIdx()
-  renderCanvas(img, txtLines, selectedLineIdx)
+  const selectedObjects = getSelectedObjects()
+  const stickers = getAddedStickers()
+  renderCanvas(img, txtLines, selectedObjects, stickers)
 }
 
 function handleSurpriseMeme() {
@@ -111,6 +115,17 @@ function handleSearch(input) {
   }
   const memesToRender = getRenderedImgs(input)
   renderGallery(memesToRender)
+}
+
+function handleSlideStickers(dir) {
+  slideStickers(dir)
+  renderStickers()
+}
+
+function handleAddSticker(id) {
+  const sticker = getStickerById(id)
+  addSticker(sticker)
+  handleCanvasRender()
 }
 
 // Display
@@ -163,6 +178,18 @@ function renderSavedMemes() {
   elMyMemes.innerHTML = strHTML
 }
 
+function renderStickers() {
+  const elStickers = document.querySelector('.stickers-container .stickers')
+  const stickers = getStickersToDisplay()
+  let strHTML = stickers
+    .map((sticker) => {
+      return `<img src="${sticker.url}" onclick="handleAddSticker(${sticker.id})" />`
+    })
+    .join('')
+
+  elStickers.innerHTML = strHTML
+}
+
 // Event Listeners
 
 function addEventListeners() {
@@ -183,10 +210,15 @@ function addTouchListeners() {
 }
 
 function handelSelectObject(ev) {
-  const idx = selectObject(ev)
-  if (idx >= 0) {
-    setSelectedLine(idx)
+  const selectedLineIdx = selectLine(ev)
+  if (selectedLineIdx >= 0) {
+    setSelectedLine(selectedLineIdx)
     document.querySelector('.text-line input').value = getLineText()
+    startDragging(ev)
+    handleCanvasRender()
+  } else {
+    const selectedStickerIdx = selectSticker(ev)
+    if (selectedStickerIdx >= 0) setSelectedSticker(selectedStickerIdx)
     startDragging(ev)
     handleCanvasRender()
   }
