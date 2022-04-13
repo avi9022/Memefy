@@ -74,6 +74,7 @@ function handleTxtColorChange(color) {
 
 function handleAddLine() {
   addLine()
+  enableTools()
   handleCanvasRender()
   document.querySelector('.text-line input').value = getLineText()
 }
@@ -84,9 +85,9 @@ function handleSwitchLines() {
   document.querySelector('.text-line input').value = getLineText()
 }
 
-function handleDeleteLine() {
-  deleteLine()
-  switchLines()
+function handleDelete() {
+  deleteObject()
+  // switchLines()
   handleCanvasRender()
 }
 
@@ -215,13 +216,21 @@ function handelSelectObject(ev) {
     setSelectedLine(selectedLineIdx)
     document.querySelector('.text-line input').value = getLineText()
     startDragging(ev)
+    enableTools()
     handleCanvasRender()
-  } else {
-    const selectedStickerIdx = selectSticker(ev)
-    if (selectedStickerIdx >= 0) setSelectedSticker(selectedStickerIdx)
+    return
+  }
+  const selectedStickerIdx = selectSticker(ev)
+  if (selectedStickerIdx >= 0) {
+    setSelectedSticker(selectedStickerIdx)
     startDragging(ev)
     handleCanvasRender()
+    return
   }
+
+  deselectAll()
+  disableTools()
+  handleCanvasRender()
 }
 
 function handleDragObject(ev) {
@@ -282,4 +291,23 @@ function doUploadImg(imgDataUrl, onSuccess) {
 
 function prevent(ev) {
   ev.preventDefault()
+}
+
+function disableTools() {
+  document.querySelector('.tools .text-line input').disabled = true
+  document
+    .querySelectorAll('.tools-btn-container .btn-tools')
+    .forEach((btn) => {
+      btn.disabled = true
+      if (btn.classList.contains('plus-btn')) btn.disabled = false
+    })
+}
+
+function enableTools() {
+  document.querySelector('.tools .text-line input').disabled = false
+  document
+    .querySelectorAll('.tools-btn-container .btn-tools')
+    .forEach((btn) => {
+      btn.disabled = false
+    })
 }

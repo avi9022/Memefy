@@ -144,8 +144,10 @@ function switchLines() {
       : gMeme.selectedObjectIdx.line + 1
 }
 
-function deleteLine() {
-  gMeme.lines.splice(gMeme.selectedObjectIdx.line, 1)
+function deleteObject() {
+  if (gMeme.selectedObjectIdx.line !== null) {
+    gMeme.lines.splice(gMeme.selectedObjectIdx.line, 1)
+  } else gMeme.stickers.splice(gMeme.selectedObjectIdx.sticker, 1)
 }
 
 function setCurrMemeFromStorage(idx) {
@@ -201,6 +203,11 @@ function checkStickerSelection({ pos, width, height }, mousePos) {
   )
 }
 
+function deselectAll() {
+  gMeme.selectedObjectIdx.line = null
+  gMeme.selectedObjectIdx.sticker = null
+}
+
 // Getters
 
 function getImgById(id) {
@@ -243,6 +250,10 @@ function getAddedStickers() {
   return gMeme.stickers
 }
 
+function getRenderedImgs(filter) {
+  return gImgs.filter((img) => img.keywords.includes(filter))
+}
+
 // Dragging
 function startDragging(ev) {
   gMeme.isDragging = true
@@ -262,10 +273,6 @@ function dragObject(ev) {
   selectedObject.pos.y += diff.y
 
   gMouseStartPos = currMousePos
-}
-
-function getRenderedImgs(filter) {
-  return gImgs.filter((img) => img.keywords.includes(filter))
 }
 
 // Storage
