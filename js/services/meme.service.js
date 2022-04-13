@@ -208,6 +208,10 @@ function dragObject(ev) {
   gMouseStartPos = currMousePos
 }
 
+function getRenderedImgs(filter) {
+  return gImgs.filter((img) => img.keywords.includes(filter))
+}
+
 // Storage
 
 function saveMeme() {

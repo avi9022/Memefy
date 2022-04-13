@@ -22,13 +22,21 @@
       </div>
     </header>
     <section class="search main-layout flex space-between">
-      <form>
+      <form onsubmit="prevent(event)">
         <input
           type="text"
           class="search-bar"
           placeholder="Enter search keayword"
           oninput="handleSearch(this.value)"
+          list="tags"
         />
+        <datalist id="tags">
+          <option value="dogs"></option>
+          <option value="cat"></option>
+          <option value="hat"></option>
+          <option value="confused"></option>
+          <option value="angry"></option>
+        </datalist>
         <button class="empty-btn search-btn" type="submit">
           <img src="img/ico/search.png" alt="search icon" srcset="" />
         </button>
@@ -139,8 +147,23 @@
               <input type="color" oninput="handleTxtColorChange(this.value)" />
             </button>
           </div>
-          <button class="btn btn-share">Share</button>
-          <button class="btn btn-save" onclick="handleSaveMeme()">Save</button>
+          <div class="finish-container flex gap10">
+            <a href="#" class="btn btn-upload" onclick="handleUploadImg()">
+              Upload
+            </a>
+            <a class="btn btn-save" onclick="handleSaveMeme()">Save</a>
+            <a
+              href="#"
+              class="btn btn-save"
+              onclick="handleDownloadMeme(this)"
+              download="meme.png"
+            >
+              Download
+            </a>
+          </div>
+          <div class="share-container flex-col">
+            <span class="user-msg"></span>
+          </div>
         </div>
       </section>
       <section class="my-memes">
