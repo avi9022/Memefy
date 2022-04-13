@@ -13,13 +13,15 @@
         <div class="logo">Me<span>me</span>fy</div>
         <nav class="nav">
           <ul class="nav-list clean-list flex">
-            <li class="nav-item flex flex-center">Gallery</li>
+            <li class="nav-item flex flex-center" onclick="showGallery()">
+              Gallery
+            </li>
             <li class="nav-item flex flex-center">About</li>
           </ul>
         </nav>
       </div>
     </header>
-    <section class="search main-layout flex space-between hidden">
+    <section class="search main-layout flex space-between">
       <form onsubmit="handleSearch()">
         <input
           type="text"
@@ -44,32 +46,38 @@
       </div>
     </section>
     <main class="page-content main-layout">
-      <section class="gallery grid hidden">
-        <img src="img/1.jpg" alt="" srcset="" />
-        <img src="img/2.jpg" alt="" srcset="" />
+      <section class="gallery grid">
+        <img onclick="handleImgChoice(1)" src="img/1.jpg" alt="" srcset="" />
+        <img onclick="handleImgChoice(2)" src="img/2.jpg" alt="" srcset="" />
         <img src="img/3.jpg" alt="" srcset="" />
         <img src="img/4.jpg" alt="" srcset="" />
         <img src="img/5.jpg" alt="" srcset="" />
         <img src="img/6.jpg" alt="" srcset="" />
       </section>
-      <section class="editor flex">
+      <section class="editor flex hidden">
         <div class="canvas-container flex flex-center">
-          <canvas
-            width="200px"
-            height="300px"
-            style="border: 1px solid black"
-          ></canvas>
+          <canvas width="400px" height="300px"></canvas>
         </div>
         <div class="tools">
           <form class="text-line">
-            <input type="text" placeholder="Enter your text here..." />
+            <input
+              type="text"
+              placeholder="Enter your text here..."
+              value="My first meme"
+              oninput="handleTxtChange(this.value)"
+            />
           </form>
           <div class="tools-btn-container grid">
-            <button class="btn btn-tools">
+            <button class="btn btn-tools" onclick="handleTxtUp()">
               <img src="img/ico/arrow-up.png" alt="" />
             </button>
             <button class="btn btn-tools">
-              <img src="img/ico/arrow-up.png" alt="" />
+              <img
+                class="flip"
+                src="img/ico/arrow-up.png"
+                onclick="handleTxtDown()"
+                alt=""
+              />
             </button>
             <button class="btn btn-tools">
               <img src="img/ico/switch-arrows.png" alt="" />
@@ -81,37 +89,61 @@
               <img src="img/ico/trash.png" alt="" />
             </button>
             <button class="btn btn-tools">
-              <img src="img/ico/font-increase.png" alt="" />
+              <img
+                src="img/ico/font-increase.png"
+                alt=""
+                onclick="handleFontIncrease()"
+              />
             </button>
             <button class="btn btn-tools">
-              <img src="img/ico/font-decrease.png" alt="" />
+              <img
+                src="img/ico/font-decrease.png"
+                alt=""
+                onclick="handleFontDecrease()"
+              />
             </button>
             <button class="btn btn-tools">
-              <img src="img/ico/align-left.png" alt="" />
+              <img
+                src="img/ico/align-left.png"
+                alt=""
+                onclick="handleAlignment('left')"
+              />
             </button>
             <button class="btn btn-tools">
-              <img src="img/ico/align-center.png" alt="" />
+              <img
+                src="img/ico/align-center.png"
+                alt=""
+                onclick="handleAlignment('center')"
+              />
             </button>
             <button class="btn btn-tools">
-              <img src="img/ico/align-right.png" alt="" />
+              <img
+                src="img/ico/align-right.png"
+                alt=""
+                onclick="handleAlignment('right')"
+              />
             </button>
-            <select class="fonts">
-              <option value="font">font</option>
-              <option value="font">font</option>
-              <option value="font">font</option>
-              <option value="font">font</option>
-              <option value="font">font</option>
+            <select class="fonts" onchange="handleFontChange(this.value)">
+              <option value="impact">Impact</option>
+              <option value="Arial">Arial</option>
+              <option value="David">David</option>
+              <option value="Poppins">Poppins</option>
             </select>
             <button class="btn btn-tools">
-              <img src="img/ico/bold.png" alt="" />
+              <img src="img/ico/bold.png" alt="" onclick="handleBold()" />
             </button>
             <button class="btn btn-tools">
               <img src="img/ico/color.png" alt="" />
+              <input type="color" oninput="handleTxtColorChange(this.value)" />
             </button>
           </div>
           <button class="btn btn-share">Share</button>
         </div>
       </section>
     </main>
+
+    <script src="js/services/meme.service.js"></script>
+    <script src="js/services/canvas.service.js"></script>
+    <script src="js/controller.js"></script>
   </body>
 </html>

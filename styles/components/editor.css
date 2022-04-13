@@ -22,7 +22,21 @@
     color: white;
 }
 
+.tools .tools-btn-container {
+    margin: 1rem 0;
+    grid-template-columns: repeat(5, 1fr);
+    grid-template-rows: repeat(3, 1fr);
+    row-gap: 10px;
+    justify-items: center;
+}
+
+.tools .tools-btn-container .fonts {
+    grid-column: span 3;
+    justify-self: stretch;
+}
+
 .tools .btn-tools {
+    position: relative;
     background-color: rgb(212, 212, 212);
     padding: 0;
     width: 50px;
@@ -35,15 +49,12 @@
     background-color: gray;
 }
 
-.tools .tools-btn-container {
-    margin: 1rem 0;
-    grid-template-columns: repeat(5, 1fr);
-    grid-template-rows: repeat(3, 1fr);
-    row-gap: 10px;
-    justify-items: center;
-}
-
-.tools .tools-btn-container .fonts {
-    grid-column: span 3;
-    justify-self: stretch;
+.tools .btn-tools input[type="color"] {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    cursor: pointer;
 }

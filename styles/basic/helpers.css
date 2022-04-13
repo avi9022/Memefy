@@ -62,3 +62,7 @@
 .hidden {
     display: none;
 }
+
+.flip {
+    transform: rotate(180deg);
+}
