@@ -1,0 +1,13 @@
+/* FONT */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,400;1,600&display=swap');
+
+/* SETUP */
+@import 'setup/vars.css';
+
+/* BASIC */
+@import 'basic/base.css';
+@import 'basic/helpers.css';
+@import 'basic/layout.css';
+
+/* COMPONENTS */
+
