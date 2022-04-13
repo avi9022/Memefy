@@ -12,8 +12,8 @@ const gImgs = [
     keywords: ['funny', 'dog'],
   },
 ]
-
 const gMeme = {}
+let gMouseStartPos
 
 function imgChoice(id) {
   // Initializing the current meme
@@ -109,14 +109,6 @@ function deleteLine() {
   gMeme.lines.splice(gMeme.selectedLineIdx, 1)
 }
 
-function startDraging() {
-  gMeme.isDragging = true
-}
-
-function stopDraging() {
-  gMeme.isDragging = false
-}
-
 // Getters
 
 function getImgById(id) {
@@ -145,4 +137,25 @@ function setSelectedLine(idx) {
 
 function getLineText() {
   return gMeme.lines[gMeme.selectedLineIdx].txt
+}
+
+// Dragging
+function startDragging(ev) {
+  gMeme.isDragging = true
+  gMouseStartPos = getEvPos(ev)
+}
+
+function stopDragging() {
+  gMeme.isDragging = false
+}
+
+function dragObject(ev) {
+  if (!gMeme.isDragging) return
+  const currMousePos = getEvPos(ev)
+  const diff = getDist(gMouseStartPos, currMousePos)
+  const line = getSelectedLine()
+  line.pos.x += diff.x
+  line.pos.y += diff.y
+
+  gMouseStartPos = currMousePos
 }

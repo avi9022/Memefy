@@ -32,26 +32,7 @@ function renderTxtLine(line, isSelected) {
 function selectObject(ev) {
   const mousePos = getEvPos(ev)
   const lines = getTxtLines()
-  console.log(lines)
   return lines.findIndex((line) => checkLineSelection(line, mousePos))
-}
-
-function dragObject(ev) {}
-
-function getEvPos(ev) {
-  var pos = {
-    x: ev.offsetX,
-    y: ev.offsetY,
-  }
-  if (gTouchEvs.includes(ev.type)) {
-    ev.preventDefault()
-    ev = ev.changedTouches[0]
-    pos = {
-      x: ev.pageX - ev.target.offsetLeft,
-      y: ev.pageY - ev.target.offsetTop * 3,
-    }
-  }
-  return pos
 }
 
 function checkLineSelection({ pos, width, size }, mousePos) {

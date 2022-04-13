@@ -107,7 +107,7 @@ function addMouseListeners() {
 function addTouchListeners() {
   gElCanvas.addEventListener('touchmove', handleDragObject)
   gElCanvas.addEventListener('touchstart', handelSelectObject)
-  gElCanvas.addEventListener('touchend', selectObject)
+  gElCanvas.addEventListener('touchend', handleStopDraging)
 }
 
 function handelSelectObject(ev) {
@@ -115,15 +115,16 @@ function handelSelectObject(ev) {
   if (idx >= 0) {
     setSelectedLine(idx)
     document.querySelector('.text-line input').value = getLineText()
-    startDraging()
+    startDragging(ev)
     handleCanvasRender()
   }
 }
 
 function handleDragObject(ev) {
-  console.log(ev)
+  dragObject(ev)
+  handleCanvasRender()
 }
 
 function handleStopDraging() {
-  stopDraging()
+  stopDragging()
 }
