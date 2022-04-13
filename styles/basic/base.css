@@ -28,4 +28,5 @@ input[type="color"]::-webkit-color-swatch-wrapper {
 
 a {
     text-decoration: none;
+    color: inherit;
 }

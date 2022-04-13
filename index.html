@@ -9,24 +9,29 @@
   </head>
   <body>
     <header class="page-heading">
-      <div class="logo">Memefy</div>
-      <nav class="nav">
-        <ul class="nav-list clean-list">
-          <li class="nav-item">Gallery</li>
-          <li class="nav-item">About</li>
-        </ul>
-      </nav>
+      <div class="page-heading-content main-layout flex space-between">
+        <div class="logo">Me<span>me</span>fy</div>
+        <nav class="nav">
+          <ul class="nav-list clean-list flex">
+            <li class="nav-item flex flex-center">Gallery</li>
+            <li class="nav-item flex flex-center">About</li>
+          </ul>
+        </nav>
+      </div>
     </header>
-    <section class="search">
-      <form action="">
+    <section class="search main-layout flex space-between">
+      <form onsubmit="handleSearch()">
         <input
           type="text"
           class="search-bar"
           placeholder="Enter search keayword"
         />
+        <button class="empty-btn search-btn" type="submit">
+          <img src="img/ico/search.png" alt="search icon" srcset="" />
+        </button>
       </form>
-      <div class="popular-word-container">
-        <div class="words">
+      <div class="popular-word-container flex flex-center">
+        <div class="words flex gap10">
           <span class="word">funny</span>
           <span class="word">comics</span>
           <span class="word">dogs</span>
@@ -38,8 +43,8 @@
         </div>
       </div>
     </section>
-    <main>
-      <section class="gallery grid">
+    <main class="page-content main-layout">
+      <section class="gallery grid hidden">
         <img src="img/1.jpg" alt="" srcset="" />
         <img src="img/2.jpg" alt="" srcset="" />
         <img src="img/3.jpg" alt="" srcset="" />
@@ -47,6 +52,7 @@
         <img src="img/5.jpg" alt="" srcset="" />
         <img src="img/6.jpg" alt="" srcset="" />
       </section>
+      <section class="editor"></section>
     </main>
   </body>
 </html>

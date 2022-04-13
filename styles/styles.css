@@ -10,4 +10,7 @@
 @import 'basic/layout.css';
 
 /* COMPONENTS */
+@import 'components/heading.css';
+@import 'components/search.css';
+@import 'components/gallery.css';
 
