@@ -218,7 +218,8 @@ function renderGallery(imgs) {
   strHTML += `<button class="btn surprise-btn" onclick="handleSurpriseMeme()">
               Surprise Me!
               </button>
-              <input type="file" class="file-input btn" name="image" onchange="handleImgInput(event)" />`
+              <input type="file" class="file-input btn" name="image" onchange="handleImgInput(event)" />
+              `
 
   elGallery.innerHTML = strHTML
 }

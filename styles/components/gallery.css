@@ -19,3 +19,19 @@
     transform: scale(1.1);
     box-shadow: 0 0 10px   var(--secondary-clr);
 }
+
+.gallery input::-webkit-file-upload-button {
+    visibility: hidden;
+  }
+
+  .gallery input {
+      color: transparent;
+      display: flex;
+    }
+    
+    .gallery input::before {
+        content: '+';
+        color: white;
+        text-align: center;
+        font-size: 7rem;
+  }
