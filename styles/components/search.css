@@ -21,6 +21,7 @@
 .search form .search-btn {
     position: absolute;
     right: 0;
+    top: -5px;
     cursor: pointer;
 }
 

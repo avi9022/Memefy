@@ -45,7 +45,7 @@ function getRandomColorHex() {
   return '#' + randomColor
 }
 
-function _makeId(length = 5) {
+function makeId(length = 5) {
   var txt = ''
   const possible =
     'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789'

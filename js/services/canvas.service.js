@@ -5,9 +5,7 @@ const gElCanvas = document.querySelector('canvas')
 const gCtx = gElCanvas.getContext('2d')
 
 function renderCanvas(elImg, lines, selectedObjectIdx, stickers) {
-  // console.log(elImg.width)
   gElCanvas.height = (400 * elImg.height) / elImg.width
-  // console.log(gElCanvas.height)
 
   gCtx.drawImage(elImg, 0, 0, gElCanvas.width, gElCanvas.height)
   lines.forEach((line, idx) => {

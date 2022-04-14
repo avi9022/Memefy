@@ -106,8 +106,6 @@ function imgChoice(id) {
     gMeme.selectedImgId = id
     addLine('My first meme', 32, 'black')
   }
-
-  console.log(gMeme)
 }
 
 function updateLineTxt(txt) {
@@ -193,8 +191,8 @@ function deleteObject() {
   } else gMeme.stickers.splice(gMeme.selectedObjectIdx.sticker, 1)
 }
 
-function setCurrMemeFromStorage(idx) {
-  gMeme = gSavedMemes[idx]
+function setCurrMemeFromStorage(id) {
+  gMeme = getSavedMemeById(id)
   gMeme.isFromStorage = true
 }
 
@@ -274,6 +272,17 @@ function editLine(idx) {
   gMeme.lines[idx].isEditing = true
 }
 
+function deleteMeme(id) {
+  const memeIdx = getSavedMemeIdxById(id)
+  gSavedMemes.splice(memeIdx, 1)
+  _saveMemesToStorage()
+}
+
+function setMemeUrl(url) {
+  const id = url.slice(url.indexOf('=') + 1)
+  gMeme.url = `http://ca-upload.com/here/img/${id}.jpg`
+}
+
 // Getters
 
 function getImgById(id) {
@@ -336,6 +345,14 @@ function getRandomSentence() {
   return gRandomSentences[getRandomInt(0, gRandomSentences.length - 1)]
 }
 
+function getSavedMemeById(id) {
+  return gSavedMemes.find((meme) => meme.id === id)
+}
+
+function getSavedMemeIdxById(id) {
+  return gSavedMemes.findIndex((meme) => meme.id === id)
+}
+
 // Dragging
 function startDragging(ev) {
   gMeme.isDragging = true
@@ -363,7 +380,7 @@ function saveMeme() {
   if (gMeme.isFromStorage) {
     gSavedMemes[gMeme.idxInStorage] = gMeme
   } else {
-    gMeme.idxInStorage = gSavedMemes.length
+    gMeme.id = makeId()
     gSavedMemes.push(gMeme)
   }
   _saveMemesToStorage()

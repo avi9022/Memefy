@@ -9,3 +9,16 @@
 .my-memes .no-memes {
     font-size: 1.5rem;
 }
+
+.my-memes .my-meme-container {
+    position: relative;
+}
+
+.my-memes .delete-meme {
+    position: absolute;
+    font-size: 2rem;
+    font-weight: 700;
+    right: 7px;
+    color: tomato;
+    cursor: pointer;
+}

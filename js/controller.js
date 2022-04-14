@@ -21,9 +21,9 @@ function handleImgChoice(imgId) {
   addEventListeners()
 }
 
-function handleMemeFromStorage(idx) {
+function handleMemeFromStorage(id) {
   showEditor()
-  setCurrMemeFromStorage(idx)
+  setCurrMemeFromStorage(id)
   handleCanvasRender()
   renderStickers()
   addEventListeners()
@@ -109,9 +109,7 @@ function handleCanvasRender(elImgProp) {
   // If elImg passed as args than it is an uploaded img
   if (getIsCustom()) {
     elImg = getCustomImgTag()
-    console.log(elImg)
   } else if (!elImg) {
-    console.log('in')
     const img = getSelectedImg()
     elImg = new Image()
     elImg.src = img.url
@@ -128,8 +126,11 @@ function handleSurpriseMeme() {
 }
 
 function handleSaveMeme() {
-  saveMeme()
-  renderSavedMemes()
+  handleUploadImg(true)
+  setTimeout(() => {
+    saveMeme()
+    renderSavedMemes()
+  }, 1000)
 }
 
 function handleSearch(input) {
@@ -170,10 +171,14 @@ function handleInlineEdit(newTxt, lineIdx) {
   line.txt = newTxt
   updateLineWidth(line)
 
-  console.log(line.width)
   document.querySelector('.text-line input').value = newTxt
   document.querySelector('.text-edit-container input').style.width =
     line.width + 10 + 'px'
+}
+
+function handleDeleteMeme(id) {
+  deleteMeme(id)
+  renderSavedMemes()
 }
 
 // Display
@@ -220,9 +225,14 @@ function renderSavedMemes() {
     return
   }
   let strHTML = ''
-  const elements = memes.map((meme, idx) => {
+  const elements = memes.map((meme) => {
     const imgUrl = getImgById(meme.selectedImgId).url
-    return `<img onclick="handleMemeFromStorage(${idx})" src="${imgUrl}" alt="saved img number ${idx}" />`
+    return `
+      <div class="my-meme-container">
+      <img onclick="handleMemeFromStorage('${meme.id}')" src=${meme.url} alt="saved meme" />
+      <span class="delete-meme" onclick="handleDeleteMeme('${meme.id}')">X</span>
+      </div>
+      `
   })
 
   strHTML += elements.join('')
@@ -334,7 +344,6 @@ function handleStopDraging() {
 function handleDoubleClick(ev) {
   const selectedLineIdx = selectLine(ev)
   const line = getLineByIdx(selectedLineIdx)
-  console.log(line)
   editLine(selectedLineIdx)
   renderTextArea(line, selectedLineIdx)
   handleCanvasRender()
@@ -348,20 +357,22 @@ function handleDownloadMeme(elLink) {
   elLink.download = 'my-meme'
 }
 
-function handleUploadImg() {
+function handleUploadImg(isSaving = false) {
   const imgDataUrl = gElCanvas.toDataURL('image/jpeg')
 
   // A function to be called if request succeeds
   function onSuccess(uploadedImgUrl) {
     const encodedUploadedImgUrl = encodeURIComponent(uploadedImgUrl)
-    document.querySelector(
-      '.user-msg'
-    ).innerText = `Your photo is available here: ${uploadedImgUrl}`
+    if (!isSaving) {
+      document.querySelector(
+        '.user-msg'
+      ).innerText = `Your photo is available here: ${uploadedImgUrl}`
 
-    document.querySelector('.share-container').innerHTML += `
-          <a class="btn" href="https://www.facebook.com/sharer/sharer.php?u=${encodedUploadedImgUrl}&t=${encodedUploadedImgUrl}" title="Share on Facebook" target="_blank" onclick="window.open('https://www.facebook.com/sharer/sharer.php?u=${uploadedImgUrl}&t=${uploadedImgUrl}'); return false;">
-             Share   
-          </a>`
+      document.querySelector('.share-container').innerHTML += `
+            <a class="btn" href="https://www.facebook.com/sharer/sharer.php?u=${encodedUploadedImgUrl}&t=${encodedUploadedImgUrl}" title="Share on Facebook" target="_blank" onclick="window.open('https://www.facebook.com/sharer/sharer.php?u=${uploadedImgUrl}&t=${uploadedImgUrl}'); return false;">
+               Share   
+            </a>`
+    }
   }
   doUploadImg(imgDataUrl, onSuccess)
 }
@@ -377,6 +388,7 @@ function doUploadImg(imgDataUrl, onSuccess) {
     .then((res) => res.text())
     .then((url) => {
       console.log('Got back live url:', url)
+      setMemeUrl(url)
       onSuccess(url)
     })
     .catch((err) => {
@@ -395,6 +407,7 @@ function loadImageFromInput(ev, onImageReady) {
   reader.onload = (event) => {
     var img = new Image()
     // Render on canvas
+    img.src = event.target.result
     img.onload = onImageReady.bind(null, img)
     setCustomImgTag(img)
   }
