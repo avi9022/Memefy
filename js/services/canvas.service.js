@@ -5,7 +5,9 @@ const gElCanvas = document.querySelector('canvas')
 const gCtx = gElCanvas.getContext('2d')
 
 function renderCanvas(elImg, lines, selectedObjectIdx, stickers) {
+  // console.log(elImg.width)
   gElCanvas.height = (400 * elImg.height) / elImg.width
+  // console.log(gElCanvas.height)
 
   gCtx.drawImage(elImg, 0, 0, gElCanvas.width, gElCanvas.height)
   lines.forEach((line, idx) => {
@@ -36,8 +38,16 @@ function renderTxtLine(line, isSelected) {
   gCtx.font = isBold ? `bold ${size}px ${font}` : `${size}px ${font}`
   line.width = gCtx.measureText(txt).width
   if (isSelected) {
+    // Rect that indicates selection
     gCtx.fillStyle = 'white'
-    gCtx.fillRect(pos.x - 5, pos.y - size, line.width + 10, size + 10)
+    gCtx.fillRect(pos.x - 10, pos.y - size, line.width + 15, size + 10)
+
+    // Circles to show resize option
+    gCtx.fillStyle = 'lightblue'
+    gCtx.beginPath()
+    gCtx.arc(pos.x + line.width + 4, pos.y + 7, 5, 0, 2 * Math.PI)
+    gCtx.fill()
+    gCtx.closePath()
   }
   gCtx.fillStyle = color
   gCtx.textAlign = align

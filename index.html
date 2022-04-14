@@ -21,7 +21,7 @@
         </nav>
       </div>
     </header>
-    <section class="search main-layout flex space-between">
+    <section class="search main-layout flex-col space-between">
       <form onsubmit="prevent(event)">
         <input
           type="text"
@@ -42,13 +42,7 @@
         </button>
       </form>
       <div class="popular-word-container flex flex-center">
-        <div class="words grid">
-          <span class="word">funny</span>
-          <span class="word">comics</span>
-          <span class="word">dogs</span>
-          <span class="word">drinks</span>
-          <span class="word">books</span>
-        </div>
+        <div class="words grid"></div>
         <div class="more-link">
           <a href="#" onclick="toggleSearchHeight()">more</a>
         </div>
@@ -56,7 +50,7 @@
     </section>
     <main class="page-content main-layout">
       <section class="main-gallery gallery grid"></section>
-      <section class="editor flex hidden">
+      <section class="editor flex-col hidden">
         <div class="canvas-container flex flex-center">
           <div class="canvas-inner-container">
             <canvas width="400px" height="300px"></canvas>

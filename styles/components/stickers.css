@@ -6,6 +6,10 @@
     background-color: #d4d4d4;
 }
 
+.stickers-container .stickers {
+    height: 50%;
+}
+
 .stickers-container .sticker-arrow {
     height: 100%;
     transition: all 0.3s;
@@ -27,7 +31,7 @@
 }
 
 .stickers-container .stickers img {
-    max-width: 80px;
+    /* max-width: 40%; */
     transition: all 0.3s;
 }
 

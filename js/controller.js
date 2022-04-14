@@ -100,14 +100,16 @@ function handleDelete() {
   handleCanvasRender()
 }
 
-function handleCanvasRender(elImg) {
+function handleCanvasRender(elImgProp) {
   const txtLines = getTxtLines()
   const selectedObjects = getSelectedObjects()
   const stickers = getAddedStickers()
+  let elImg = elImgProp
 
   // If elImg passed as args than it is an uploaded img
   if (getIsCustom()) elImg = getCustomImgTag()
   else if (!elImg) {
+    console.log('in')
     const img = getSelectedImg()
     elImg = new Image()
     elImg.src = img.url
@@ -176,11 +178,13 @@ function handleInlineEdit(newTxt, lineIdx) {
 
 function showGallery() {
   document.querySelector('.gallery').classList.remove('hidden')
+  document.querySelector('.search').classList.remove('hidden')
   document.querySelector('.editor').classList.add('hidden')
 }
 
 function showEditor() {
   document.querySelector('.gallery').classList.add('hidden')
+  document.querySelector('.search').classList.add('hidden')
   document.querySelector('.editor').classList.remove('hidden')
 }
 
@@ -294,6 +298,7 @@ function addTouchListeners() {
 }
 
 function handelSelectObject(ev) {
+  if (checkIsOverResize(ev)) return
   const selectedLineIdx = selectLine(ev)
   if (selectedLineIdx >= 0) {
     setSelectedLine(selectedLineIdx)
@@ -315,6 +320,7 @@ function handelSelectObject(ev) {
 }
 
 function handleDragObject(ev) {
+  checkIsOverResize(ev)
   dragObject(ev)
   handleCanvasRender()
 }
@@ -387,7 +393,6 @@ function loadImageFromInput(ev, onImageReady) {
   reader.onload = (event) => {
     var img = new Image()
     // Render on canvas
-    img.src = event.target.result
     img.onload = onImageReady.bind(null, img)
     setCustomImgTag(img)
   }
@@ -417,4 +422,18 @@ function enableTools() {
     .forEach((btn) => {
       btn.disabled = false
     })
+}
+
+function checkIsOverResize(ev) {
+  const mousePos = getEvPos(ev)
+  const selectedLine = getSelectedObject()
+  if (!selectedLine) return
+  const cornerPos = {
+    x: selectedLine.pos.x + selectedLine.width + 4,
+    y: selectedLine.pos.y + 7,
+  }
+  const distFromCorner = getDistAbs(mousePos, cornerPos)
+
+  document.body.style.cursor = distFromCorner < 10 ? 'nwse-resize' : 'auto'
+  return distFromCorner < 10
 }

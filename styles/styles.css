@@ -20,3 +20,6 @@
 @import 'components/finish.css';
 @import 'components/canvas-area.css';
 
+/* MEDIA-QUARY */
+@import 'mq/mq.css';
+

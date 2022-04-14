@@ -12,6 +12,7 @@
     cursor: pointer;
     border-radius: 10px;
     transition: all 0.3s;
+    min-height: 150px;
 }
 
 .gallery img:hover, .gallery .btn:hover {

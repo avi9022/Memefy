@@ -1,0 +1,27 @@
+/* SMALL */
+
+/* MEDIUM */
+
+/* LARGE */
+@media screen and (min-width:840px) {
+    .search {
+        flex-direction: row;
+        height: 100px;
+    }
+
+    .search .popular-word-container {
+        margin: 0;
+    }
+
+    .editor {
+        flex-direction: row;
+    }
+
+    .stickers-container .stickers img {
+        max-width: 80px;
+    }
+
+    .stickers-container .stickers {
+        height: auto;
+    }
+}

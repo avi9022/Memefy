@@ -2,10 +2,20 @@
 
 const DB_KEY = 'savedMemesDB'
 
+const gRandomSentences = [
+  'ME AND THE BOYS IN 1902',
+  'Me in hell explaining hentai to hitler',
+  'POV: you start a twitter argument',
+  'ONLY JUST BEGUN!',
+  'WHAT ARE MEMES',
+  'I AM A MEME',
+  'POV: You enter wrong classroom',
+  'WHAT IF I TOLD YOU',
+]
 const gImgs = [
   {
     id: 1,
-    url: 'img/2.jpg',
+    url: '/img/2.jpg',
     keywords: ['funny', 'politics'],
   },
   {
@@ -90,12 +100,14 @@ function imgChoice(id) {
 
     const randNumOfLines = getRandomInt(1, 2)
     for (let i = 0; i < randNumOfLines; i++) {
-      addLine('random text', getRandomInt(16, 60), getRandomColorHex())
+      addLine(getRandomSentence(), getRandomInt(16, 48), getRandomColorHex())
     }
   } else {
     gMeme.selectedImgId = id
-    addLine('My first meme', 48, 'black')
+    addLine('My first meme', 32, 'black')
   }
+
+  console.log(gMeme)
 }
 
 function updateLineTxt(txt) {
@@ -318,6 +330,10 @@ function getCustomImgTag() {
 
 function getLineByIdx(idx) {
   return gMeme.lines[idx]
+}
+
+function getRandomSentence() {
+  return gRandomSentences[getRandomInt(0, gRandomSentences.length - 1)]
 }
 
 // Dragging
