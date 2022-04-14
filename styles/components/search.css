@@ -2,6 +2,8 @@
     padding-top: 2rem;
     padding-bottom: 2rem;
     background-color: white;
+    height: 100px;
+    overflow: hidden;
 }
 
 .search form {
@@ -13,7 +15,7 @@
     background-color: transparent;
 
     border-bottom: 2px solid black;
-    font-size: 2rem;
+    font-size: 1.5rem;
 }
 
 .search form .search-btn {
@@ -23,11 +25,20 @@
 }
 
 .search .popular-word-container {
-    font-size: 1.5rem;
+    overflow: hidden;
+}
+
+.search .popular-word-container .words {
+    grid-template-columns: repeat(4, minmax(50px, 1fr));
+    justify-items: center;
+    column-gap: 20px;
+    row-gap: 10px;
+    align-self: flex-start;
 }
 
 .search .popular-word-container .word {
     cursor: pointer;
+    font-size: 1rem;
 }
 
 .search .popular-word-container .more-link {

@@ -6,6 +6,8 @@ function init() {
   const imgs = getImgs()
   renderGallery(imgs)
   renderSavedMemes()
+  initSearchKeyWords(imgs)
+  renderKeyWords()
   initStickers()
 }
 
@@ -104,7 +106,7 @@ function handleCanvasRender(elImg) {
   const stickers = getAddedStickers()
 
   // If elImg passed as args than it is an uploaded img
-  if (getIsCustom) elImg = getCustomImgTag()
+  if (getIsCustom()) elImg = getCustomImgTag()
   else if (!elImg) {
     const img = getSelectedImg()
     elImg = new Image()
@@ -206,6 +208,18 @@ function renderStickers() {
     .join('')
 
   elStickers.innerHTML = strHTML
+}
+
+function renderKeyWords() {
+  const elKeyWordContainer = document.querySelector(
+    '.popular-word-container .words'
+  )
+  const keyWords = Array.from(getKeyWords())
+  let strHTML = keyWords
+    .map((keyWord) => `<span class="word">${keyWord}</span>`)
+    .join('')
+
+  elKeyWordContainer.innerHTML = strHTML
 }
 
 // Event Listeners
