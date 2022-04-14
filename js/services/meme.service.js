@@ -144,8 +144,13 @@ function changeFontColor(color) {
 }
 
 function addLine(txt = 'My next line', size = 40, color = 'black') {
+  const canvaHeight = getCanvasHeight()
   const lineY =
-    gMeme.lines.length === 0 ? 50 : gMeme.lines.length === 1 ? 350 : 200
+    gMeme.lines.length === 0
+      ? 50
+      : gMeme.lines.length === 1
+      ? canvaHeight - 30
+      : canvaHeight / 2
   const line = {
     txt: txt,
     size,
@@ -249,6 +254,12 @@ function checkStickerSelection({ pos, width, height }, mousePos) {
 function deselectAll() {
   gMeme.selectedObjectIdx.line = null
   gMeme.selectedObjectIdx.sticker = null
+
+  gMeme.lines.forEach((line) => (line.isEditing = false))
+}
+
+function editLine(idx) {
+  gMeme.lines[idx].isEditing = true
 }
 
 // Getters
@@ -303,6 +314,10 @@ function getIsCustom() {
 
 function getCustomImgTag() {
   return gCustomImgTag
+}
+
+function getLineByIdx(idx) {
+  return gMeme.lines[idx]
 }
 
 // Dragging

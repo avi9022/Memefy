@@ -9,6 +9,7 @@ function renderCanvas(elImg, lines, selectedObjectIdx, stickers) {
 
   gCtx.drawImage(elImg, 0, 0, gElCanvas.width, gElCanvas.height)
   lines.forEach((line, idx) => {
+    if (line.isEditing) return
     const isSelected = idx === selectedObjectIdx.line
     renderTxtLine(line, isSelected)
   })
@@ -41,4 +42,15 @@ function renderTxtLine(line, isSelected) {
   gCtx.fillStyle = color
   gCtx.textAlign = align
   gCtx.fillText(txt, pos.x, pos.y)
+}
+
+function getCanvasHeight() {
+  return gElCanvas.height
+}
+
+function updateLineWidth(line) {
+  gCtx.font = gCtx.font = line.isBold
+    ? `bold ${line.size}px ${line.font}`
+    : `${line.size}px ${line.font}`
+  line.width = gCtx.measureText(line.txt).width
 }

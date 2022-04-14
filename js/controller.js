@@ -113,6 +113,10 @@ function handleCanvasRender(elImg) {
     elImg.src = img.url
   }
   renderCanvas(elImg, txtLines, selectedObjects, stickers)
+
+  // Making sure the container is the canvas size
+  document.querySelector('.canvas-inner-container').style.height =
+    getCanvasHeight() + 'px'
 }
 
 function handleSurpriseMeme() {
@@ -148,6 +152,24 @@ function handleAddSticker(id) {
 function handleIncreaseClickCount(word) {
   increaseClickCount(word)
   renderKeyWords()
+}
+
+function handleDeselectAll() {
+  deselectAll()
+  disableTools()
+  document.querySelector('.text-edit-container').innerHTML = ''
+  handleCanvasRender()
+}
+
+function handleInlineEdit(newTxt, lineIdx) {
+  const line = getLineByIdx(lineIdx)
+  line.txt = newTxt
+  updateLineWidth(line)
+
+  console.log(line.width)
+  document.querySelector('.text-line input').value = newTxt
+  document.querySelector('.text-edit-container input').style.width =
+    line.width + 10 + 'px'
 }
 
 // Display
@@ -194,7 +216,6 @@ function renderSavedMemes() {
   let strHTML = ''
   const elements = memes.map((meme, idx) => {
     const imgUrl = getImgById(meme.selectedImgId).url
-    console.log(imgUrl)
     return `<img onclick="handleMemeFromStorage(${idx})" src="${imgUrl}" alt="saved img number ${idx}" />`
   })
 
@@ -242,6 +263,16 @@ function toggleSearchHeight() {
   }
 }
 
+function renderTextArea({ txt, size, pos, font, width, color }, lineIdx) {
+  const elTextEditContainer = document.querySelector(
+    '.canvas-container .text-edit-container'
+  )
+  elTextEditContainer.style.top = pos.y - size + 'px'
+  elTextEditContainer.style.left = pos.x + 'px'
+  const elTextArea = `<input value="${txt}" oninput="handleInlineEdit(this.value, ${lineIdx})" style="color: ${color}; font-size: ${size}px; font-family: ${font};" class="edit-text" />`
+  elTextEditContainer.innerHTML = elTextArea
+}
+
 // Event Listeners
 
 function addEventListeners() {
@@ -280,9 +311,7 @@ function handelSelectObject(ev) {
     return
   }
 
-  deselectAll()
-  disableTools()
-  handleCanvasRender()
+  handleDeselectAll()
 }
 
 function handleDragObject(ev) {
@@ -294,15 +323,19 @@ function handleStopDraging() {
   stopDragging()
 }
 
-function handleDoubleClick() {
-  console.log('in')
+function handleDoubleClick(ev) {
+  const selectedLineIdx = selectLine(ev)
+  const line = getLineByIdx(selectedLineIdx)
+  console.log(line)
+  editLine(selectedLineIdx)
+  renderTextArea(line, selectedLineIdx)
+  handleCanvasRender()
 }
 
 // Download/Upload
 
 function handleDownloadMeme(elLink) {
   const data = gElCanvas.toDataURL()
-  console.log(data)
   elLink.href = data
   elLink.download = 'my-meme'
 }
@@ -344,7 +377,6 @@ function doUploadImg(imgDataUrl, onSuccess) {
 }
 
 function handleImgInput(ev) {
-  console.log('in')
   handleCustomMeme()
   loadImageFromInput(ev, handleCanvasRender)
 }
