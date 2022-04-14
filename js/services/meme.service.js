@@ -15,7 +15,7 @@ const gRandomSentences = [
 const gImgs = [
   {
     id: 1,
-    url: '/img/2.jpg',
+    url: 'img/2.jpg',
     keywords: ['funny', 'politics'],
   },
   {
