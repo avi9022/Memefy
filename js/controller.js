@@ -107,8 +107,10 @@ function handleCanvasRender(elImgProp) {
   let elImg = elImgProp
 
   // If elImg passed as args than it is an uploaded img
-  if (getIsCustom()) elImg = getCustomImgTag()
-  else if (!elImg) {
+  if (getIsCustom()) {
+    elImg = getCustomImgTag()
+    console.log(elImg)
+  } else if (!elImg) {
     console.log('in')
     const img = getSelectedImg()
     elImg = new Image()
