@@ -2,17 +2,6 @@
     background-color: var(--primary-clr);
 }
 
-.page-heading .logo {
-    font-size: 2rem;
-    font-weight: bold;
-    color: var(--secondary-clr);
-    
-}
-
-.page-heading .logo span {
-    color: rgb(255, 255, 255);
-}
-
 .page-heading .nav .nav-item {
     font-size: 1.3rem;
     width: 100px;

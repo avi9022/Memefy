@@ -11,6 +11,7 @@
 
 /* COMPONENTS */
 @import 'components/heading.css';
+@import 'components/logo.css';
 @import 'components/search.css';
 @import 'components/gallery.css';
 @import 'components/editor.css';
@@ -19,6 +20,7 @@
 @import 'components/share.css';
 @import 'components/finish.css';
 @import 'components/canvas-area.css';
+@import 'components/footer.css';
 
 /* MEDIA-QUARY */
 @import 'mq/mq.css';
