@@ -145,6 +145,11 @@ function handleAddSticker(id) {
   handleCanvasRender()
 }
 
+function handleIncreaseClickCount(word) {
+  increaseClickCount(word)
+  renderKeyWords()
+}
+
 // Display
 
 function showGallery() {
@@ -214,12 +219,27 @@ function renderKeyWords() {
   const elKeyWordContainer = document.querySelector(
     '.popular-word-container .words'
   )
-  const keyWords = Array.from(getKeyWords())
+  const keyWords = getKeyWords()
   let strHTML = keyWords
-    .map((keyWord) => `<span class="word">${keyWord}</span>`)
+    .map((keyWord) => {
+      return `<span class="word" onclick="handleIncreaseClickCount('${
+        keyWord.keyword
+      }')" style="font-size:${1 + keyWord.clickCount / 10}rem">${
+        keyWord.keyword
+      }</span>`
+    })
     .join('')
 
   elKeyWordContainer.innerHTML = strHTML
+}
+
+function toggleSearchHeight() {
+  const elSearch = document.querySelector('.search')
+  if (elSearch.style.height === '100%') {
+    elSearch.style.height = '100px'
+  } else {
+    elSearch.style.height = '100%'
+  }
 }
 
 // Event Listeners
@@ -233,6 +253,7 @@ function addMouseListeners() {
   gElCanvas.addEventListener('mousemove', handleDragObject)
   gElCanvas.addEventListener('mousedown', handelSelectObject)
   gElCanvas.addEventListener('mouseup', handleStopDraging)
+  gElCanvas.addEventListener('dblclick', handleDoubleClick)
 }
 
 function addTouchListeners() {
@@ -271,6 +292,10 @@ function handleDragObject(ev) {
 
 function handleStopDraging() {
   stopDragging()
+}
+
+function handleDoubleClick() {
+  console.log('in')
 }
 
 // Download/Upload

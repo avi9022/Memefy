@@ -44,4 +44,6 @@
 .search .popular-word-container .more-link {
     margin-inline-start: 1rem;
     font-size: 1rem;
+    font-weight: bold;
+    align-self: flex-start;
 }
