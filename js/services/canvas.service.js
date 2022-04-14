@@ -4,9 +4,7 @@ const gTouchEvs = ['touchstart', 'touchmove', 'touchend']
 const gElCanvas = document.querySelector('canvas')
 const gCtx = gElCanvas.getContext('2d')
 
-function renderCanvas({ url }, lines, selectedObjectIdx, stickers) {
-  const elImg = new Image()
-  elImg.src = url
+function renderCanvas(elImg, lines, selectedObjectIdx, stickers) {
   gElCanvas.height = (400 * elImg.height) / elImg.width
 
   gCtx.drawImage(elImg, 0, 0, gElCanvas.width, gElCanvas.height)

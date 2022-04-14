@@ -5,48 +5,74 @@ const DB_KEY = 'savedMemesDB'
 const gImgs = [
   {
     id: 1,
-    url: 'img/1.jpg',
+    url: 'img/2.jpg',
     keywords: ['funny', 'politics'],
   },
   {
     id: 2,
-    url: 'img/2.jpg',
+    url: 'img/003.jpg',
     keywords: ['funny', 'dog'],
   },
   {
     id: 3,
-    url: 'img/3.jpg',
+    url: 'img/004.jpg',
     keywords: ['funny', 'dog', 'baby', 'babies'],
   },
   {
     id: 4,
-    url: 'img/4.jpg',
+    url: 'img/5.jpg',
     keywords: ['funny', 'cat', 'computer', 'sleep'],
   },
   {
     id: 5,
-    url: 'img/5.jpg',
+    url: 'img/005.jpg',
     keywords: ['funny', 'kid', 'sea', 'angry'],
   },
   {
     id: 6,
-    url: 'img/6.jpg',
+    url: 'img/006.jpg',
     keywords: ['funny', 'man', 'hair', 'explain', 'confused'],
   },
   {
     id: 7,
-    url: 'img/7.jpg',
+    url: 'img/8.jpg',
     keywords: ['funny', 'baby', 'surprised', 'chair'],
   },
   {
     id: 8,
-    url: 'img/8.jpg',
+    url: 'img/9.jpg',
+    keywords: ['funny', 'man', 'hat', 'tell me more', 'tie'],
+  },
+  {
+    id: 9,
+    url: 'img/12.jpg',
+    keywords: ['funny', 'man', 'hat', 'tell me more', 'tie'],
+  },
+  {
+    id: 10,
+    url: 'img/19.jpg',
+    keywords: ['funny', 'man', 'hat', 'tell me more', 'tie'],
+  },
+  {
+    id: 11,
+    url: 'img/img2.jpg',
+    keywords: ['funny', 'man', 'hat', 'tell me more', 'tie'],
+  },
+  {
+    id: 12,
+    url: 'img/img4.jpg',
+    keywords: ['funny', 'man', 'hat', 'tell me more', 'tie'],
+  },
+  {
+    id: 13,
+    url: 'img/img5.jpg',
     keywords: ['funny', 'man', 'hat', 'tell me more', 'tie'],
   },
 ]
 let gMeme
 let gMouseStartPos
 let gSavedMemes
+let gCustomImgTag
 
 function imgChoice(id) {
   // Initializing the current meme
@@ -155,6 +181,23 @@ function setCurrMemeFromStorage(idx) {
   gMeme.isFromStorage = true
 }
 
+function setCurrMemeCustom() {
+  gMeme = {}
+  gMeme.lines = []
+  gMeme.selectedObjectIdx = {
+    line: 0,
+    sticker: null,
+  }
+  gMeme.stickers = []
+  gMeme.isFromStorage = false
+  gMeme.isCustom = true
+  addLine('My first meme', 48, 'black')
+}
+
+function setCustomImgTag(img) {
+  gCustomImgTag = img
+}
+
 function addSticker(sticker) {
   sticker.pos = { x: 100, y: 100 }
   sticker.width = 100
@@ -252,6 +295,14 @@ function getAddedStickers() {
 
 function getRenderedImgs(filter) {
   return gImgs.filter((img) => img.keywords.includes(filter))
+}
+
+function getIsCustom() {
+  return gMeme.isCustom
+}
+
+function getCustomImgTag() {
+  return gCustomImgTag
 }
 
 // Dragging

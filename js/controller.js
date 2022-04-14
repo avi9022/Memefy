@@ -27,6 +27,13 @@ function handleMemeFromStorage(idx) {
   addEventListeners()
 }
 
+function handleCustomMeme() {
+  showEditor()
+  setCurrMemeCustom()
+  renderStickers()
+  addEventListeners()
+}
+
 function handleTxtChange(val) {
   updateLineTxt(val)
   handleCanvasRender()
@@ -91,12 +98,19 @@ function handleDelete() {
   handleCanvasRender()
 }
 
-function handleCanvasRender() {
-  const img = getSelectedImg()
+function handleCanvasRender(elImg) {
   const txtLines = getTxtLines()
   const selectedObjects = getSelectedObjects()
   const stickers = getAddedStickers()
-  renderCanvas(img, txtLines, selectedObjects, stickers)
+
+  // If elImg passed as args than it is an uploaded img
+  if (getIsCustom) elImg = getCustomImgTag()
+  else if (!elImg) {
+    const img = getSelectedImg()
+    elImg = new Image()
+    elImg.src = img.url
+  }
+  renderCanvas(elImg, txtLines, selectedObjects, stickers)
 }
 
 function handleSurpriseMeme() {
@@ -154,9 +168,10 @@ function renderGallery(imgs) {
   })
 
   strHTML += elements.join('')
-  strHTML += `        <button class="btn surprise-btn" onclick="handleSurpriseMeme()">
-  Surprise Me!
-</button>`
+  strHTML += `<button class="btn surprise-btn" onclick="handleSurpriseMeme()">
+              Surprise Me!
+              </button>
+              <input type="file" class="file-input btn" name="image" onchange="handleImgInput(event)" />`
 
   elGallery.innerHTML = strHTML
 }
@@ -171,7 +186,9 @@ function renderSavedMemes() {
   }
   let strHTML = ''
   const elements = memes.map((meme, idx) => {
-    return `<img onclick="handleMemeFromStorage(${idx})" src="img/${meme.selectedImgId}.jpg" alt="saved img number ${idx}" />`
+    const imgUrl = getImgById(meme.selectedImgId).url
+    console.log(imgUrl)
+    return `<img onclick="handleMemeFromStorage(${idx})" src="${imgUrl}" alt="saved img number ${idx}" />`
   })
 
   strHTML += elements.join('')
@@ -285,6 +302,25 @@ function doUploadImg(imgDataUrl, onSuccess) {
     .catch((err) => {
       console.error(err)
     })
+}
+
+function handleImgInput(ev) {
+  console.log('in')
+  handleCustomMeme()
+  loadImageFromInput(ev, handleCanvasRender)
+}
+
+function loadImageFromInput(ev, onImageReady) {
+  var reader = new FileReader()
+
+  reader.onload = (event) => {
+    var img = new Image()
+    // Render on canvas
+    img.src = event.target.result
+    img.onload = onImageReady.bind(null, img)
+    setCustomImgTag(img)
+  }
+  reader.readAsDataURL(ev.target.files[0])
 }
 
 // MISC
