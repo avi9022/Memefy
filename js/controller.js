@@ -100,15 +100,16 @@ function handleDelete() {
   handleCanvasRender()
 }
 
-function handleCanvasRender(elImgProp) {
+function handleCanvasRender(elImg) {
   const txtLines = getTxtLines()
   const selectedObjects = getSelectedObjects()
   const stickers = getAddedStickers()
-  let elImg = elImgProp
 
   // If elImg passed as args than it is an uploaded img
   if (getIsCustom()) {
-    elImg = getCustomImgTag()
+    const img = getImgData()
+    elImg = new Image()
+    elImg.src = img
   } else if (!elImg) {
     const img = getSelectedImg()
     elImg = new Image()
@@ -226,7 +227,6 @@ function renderSavedMemes() {
   }
   let strHTML = ''
   const elements = memes.map((meme) => {
-    const imgUrl = getImgById(meme.selectedImgId).url
     return `
       <div class="my-meme-container">
       <img onclick="handleMemeFromStorage('${meme.id}')" src=${meme.url} alt="saved meme" />
@@ -408,6 +408,7 @@ function loadImageFromInput(ev, onImageReady) {
     var img = new Image()
     // Render on canvas
     img.src = event.target.result
+    setImgDataSrc(event.target.result)
     img.onload = onImageReady.bind(null, img)
     setCustomImgTag(img)
   }

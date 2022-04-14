@@ -106,6 +106,8 @@ function imgChoice(id) {
     gMeme.selectedImgId = id
     addLine('My first meme', 32, 'black')
   }
+
+  gCustomImgTag = null
 }
 
 function updateLineTxt(txt) {
@@ -194,6 +196,7 @@ function deleteObject() {
 function setCurrMemeFromStorage(id) {
   gMeme = getSavedMemeById(id)
   gMeme.isFromStorage = true
+  gCustomImgTag = null
 }
 
 function setCurrMemeCustom() {
@@ -283,6 +286,10 @@ function setMemeUrl(url) {
   gMeme.url = `http://ca-upload.com/here/img/${id}.jpg`
 }
 
+function setImgDataSrc(data) {
+  gMeme.imgData = data
+}
+
 // Getters
 
 function getImgById(id) {
@@ -351,6 +358,10 @@ function getSavedMemeById(id) {
 
 function getSavedMemeIdxById(id) {
   return gSavedMemes.findIndex((meme) => meme.id === id)
+}
+
+function getImgData() {
+  return gMeme.imgData
 }
 
 // Dragging
