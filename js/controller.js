@@ -7,6 +7,7 @@ function init() {
   renderGallery(imgs)
   renderSavedMemes()
   initSearchKeyWords(imgs)
+  renderSearchData()
   renderKeyWords()
   initStickers()
 }
@@ -158,6 +159,11 @@ function handleAddSticker(id) {
 function handleIncreaseClickCount(word) {
   increaseClickCount(word)
   renderKeyWords()
+
+  document.querySelector('.search form input').value = word
+  document.querySelector('.search form input').focus()
+
+  handleSearch(word)
 }
 
 function handleDeselectAll() {
@@ -287,6 +293,18 @@ function renderTextArea({ txt, size, pos, font, width, color }, lineIdx) {
   elTextEditContainer.style.left = pos.x + 'px'
   const elTextArea = `<input value="${txt}" oninput="handleInlineEdit(this.value, ${lineIdx})" style="color: ${color}; font-size: ${size}px; font-family: ${font};" class="edit-text" />`
   elTextEditContainer.innerHTML = elTextArea
+}
+
+function renderSearchData() {
+  const elDataList = document.getElementById('tags')
+  const keyWords = getKeyWords()
+  const strHTML = keyWords
+    .map((keyword) => {
+      return `<option value="${keyword.keyword}"></option>`
+    })
+    .join('')
+
+  elDataList.innerHTML = strHTML
 }
 
 // Event Listeners
