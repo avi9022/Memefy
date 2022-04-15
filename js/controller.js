@@ -278,11 +278,11 @@ function renderKeyWords() {
 }
 
 function toggleSearchHeight() {
-  const elSearch = document.querySelector('.search')
-  if (elSearch.style.height === '100%') {
-    elSearch.style.height = '100px'
+  const elSearch = document.querySelector('.search .popular-word-container')
+  if (elSearch.style.maxHeight === '100%') {
+    elSearch.style.maxHeight = '40px'
   } else {
-    elSearch.style.height = '100%'
+    elSearch.style.maxHeight = '100%'
   }
 }
 

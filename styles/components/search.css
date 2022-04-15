@@ -2,8 +2,7 @@
     padding-top: 2rem;
     padding-bottom: 2rem;
     background-color: white;
-    overflow: hidden;
-    height: 170px;
+    height: fit-content;
 }
 
 .search form {
@@ -26,21 +25,26 @@
 }
 
 .search .popular-word-container {
+    position: relative;
     overflow: hidden;
     margin-top: 2rem;
+    max-height: 40px;
+    padding-top: 0.5rem;
+    transition: all 0.3s ease-in-out;
 }
 
 .search .popular-word-container .words {
-    grid-template-columns: repeat(4, minmax(50px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(35px, 1fr));
     justify-items: center;
-    column-gap: 20px;
+    column-gap: 60px;
     row-gap: 10px;
     align-self: flex-start;
+    width: 80%;
 }
 
 .search .popular-word-container .word {
     cursor: pointer;
-    font-size: 1rem;
+    font-size: 5rem;
 }
 
 .search .popular-word-container .more-link {
@@ -48,4 +52,7 @@
     font-size: 1rem;
     font-weight: bold;
     align-self: flex-start;
+    position: absolute;
+    right: 0;
+    bottom: -5px;
 }

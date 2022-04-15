@@ -1,16 +1,29 @@
 /* SMALL */
 
 /* MEDIUM */
+@media screen and (min-width:600px) {
+}
 
 /* LARGE */
 @media screen and (min-width:840px) {
     .search {
         flex-direction: row;
-        height: 100px;
     }
 
     .search .popular-word-container {
+        grid-template-columns: repeat(4, minmax(250px, 1fr));
         margin: 0;
+        flex-basis: 60%;
+    }
+
+    .search .popular-word-container .more-link {
+        position: relative;
+        right: -20px;
+    }
+
+    .gallery {
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+
     }
 
     .editor {
