@@ -5,12 +5,13 @@ function getEvPos(ev) {
     x: ev.offsetX,
     y: ev.offsetY,
   }
+
   if (gTouchEvs.includes(ev.type)) {
     ev.preventDefault()
     ev = ev.changedTouches[0]
     pos = {
       x: ev.pageX - ev.target.offsetLeft,
-      y: ev.pageY - ev.target.offsetTop * 3,
+      y: ev.pageY - ev.target.offsetParent.offsetTop,
     }
   }
   return pos

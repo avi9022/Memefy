@@ -313,6 +313,7 @@ function renderSearchData() {
 function addEventListeners() {
   addMouseListeners()
   addTouchListeners()
+  addResize()
 }
 
 function addMouseListeners() {
@@ -326,6 +327,15 @@ function addTouchListeners() {
   gElCanvas.addEventListener('touchmove', handleDragObject)
   gElCanvas.addEventListener('touchstart', handelSelectObject)
   gElCanvas.addEventListener('touchend', handleStopDraging)
+}
+
+function addResize() {
+  window.addEventListener('resize', handleResize)
+}
+
+function handleResize() {
+  updateCnavasWidth()
+  handleCanvasRender()
 }
 
 function handelSelectObject(ev) {

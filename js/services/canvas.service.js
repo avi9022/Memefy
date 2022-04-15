@@ -5,7 +5,7 @@ const gElCanvas = document.querySelector('canvas')
 const gCtx = gElCanvas.getContext('2d')
 
 function renderCanvas(elImg, lines, selectedObjectIdx, stickers) {
-  gElCanvas.height = (400 * elImg.height) / elImg.width
+  gElCanvas.height = (gElCanvas.width * elImg.height) / elImg.width
 
   gCtx.drawImage(elImg, 0, 0, gElCanvas.width, gElCanvas.height)
   lines.forEach((line, idx) => {
@@ -61,4 +61,9 @@ function updateLineWidth(line) {
     ? `bold ${line.size}px ${line.font}`
     : `${line.size}px ${line.font}`
   line.width = gCtx.measureText(line.txt).width
+}
+
+function updateCnavasWidth() {
+  if (innerWidth <= 400) gElCanvas.width = innerWidth
+  else gElCanvas.width = 400
 }

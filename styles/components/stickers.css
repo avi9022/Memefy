@@ -1,7 +1,7 @@
 .stickers-container {
     grid-column: span 5;
     height: 100px;
-    width: 100%;
+    width: 90%;
     border-radius: 5px;
     background-color: #d4d4d4;
 }
@@ -13,6 +13,10 @@
 .stickers-container .sticker-arrow {
     height: 100%;
     transition: all 0.3s;
+}
+
+.stickers-container .sticker-arrow img {
+    width: 30px;
 }
 
 .stickers-container .sticker-arrow.right {
@@ -31,7 +35,6 @@
 }
 
 .stickers-container .stickers img {
-    /* max-width: 40%; */
     transition: all 0.3s;
 }
 
