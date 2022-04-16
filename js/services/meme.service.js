@@ -421,6 +421,7 @@ function saveMeme() {
     gSavedMemes.push(gMeme)
   }
   _saveMemesToStorage()
+  return gMeme.id
 }
 
 function loadSavedMemes() {

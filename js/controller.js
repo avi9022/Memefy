@@ -130,7 +130,9 @@ function handleSurpriseMeme() {
 function handleSaveMeme() {
   handleUploadImg(true)
   setTimeout(() => {
-    saveMeme()
+    const memeId = saveMeme()
+    setCurrMemeFromStorage(memeId)
+    handleCanvasRender()
     renderSavedMemes()
   }, 1000)
 }
