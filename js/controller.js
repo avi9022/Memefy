@@ -290,7 +290,7 @@ function renderTextArea({ txt, size, pos, font, width, color }, lineIdx) {
   const elTextEditContainer = document.querySelector(
     '.canvas-container .text-edit-container'
   )
-  elTextEditContainer.style.top = pos.y - size + 'px'
+  elTextEditContainer.style.top = pos.y - size / 2 + 'px'
   elTextEditContainer.style.left = pos.x + 'px'
   const elTextArea = `<input value="${txt}" oninput="handleInlineEdit(this.value, ${lineIdx})" style="color: ${color}; font-size: ${size}px; font-family: ${font};" class="edit-text" />`
   elTextEditContainer.innerHTML = elTextArea
@@ -383,6 +383,7 @@ function handleStopDraging() {
 
 function handleDoubleClick(ev) {
   const selectedLineIdx = selectLine(ev)
+  if (selectedLineIdx === -1) return
   const line = getLineByIdx(selectedLineIdx)
   editLine(selectedLineIdx)
   renderTextArea(line, selectedLineIdx)

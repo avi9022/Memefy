@@ -178,6 +178,7 @@ function addLine(txt = 'My next line', size = 40, color = 'black') {
 
   gMeme.lines.push(line)
   gMeme.selectedObjectIdx.line = gMeme.lines.length - 1
+  gMeme.selectedObjectIdx.sticker = null
 }
 
 function switchLines() {
@@ -221,6 +222,9 @@ function addSticker(sticker) {
   sticker.width = 100
   sticker.height = 100
   gMeme.stickers.push(sticker)
+
+  gMeme.selectedObjectIdx.sticker = gMeme.stickers.length - 1
+  gMeme.selectedObjectIdx.line = null
 }
 
 function selectLine(ev) {
@@ -250,8 +254,8 @@ function checkLineSelection({ pos, width, size }, mousePos) {
   return (
     mousePos.x >= pos.x &&
     mousePos.x <= pos.x + width &&
-    mousePos.y <= pos.y &&
-    mousePos.y >= pos.y - size
+    mousePos.y <= pos.y + size / 2 &&
+    mousePos.y >= pos.y - size / 2
   )
 }
 
