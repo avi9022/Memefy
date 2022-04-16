@@ -290,6 +290,23 @@ function setImgDataSrc(data) {
   gMeme.imgData = data
 }
 
+function setResizing() {
+  gMeme.isResizing = true
+}
+
+function resizeObject(ev) {
+  const selectedObject = getSelectedObject()
+  const mouseCurrPos = getEvPos(ev)
+  const diff = getDist(gMouseStartPos, mouseCurrPos)
+  if (selectedObject.txt) {
+    selectedObject.size += diff.x
+  } else {
+    selectedObject.width += diff.x
+    selectedObject.height += diff.y
+  }
+  gMouseStartPos = mouseCurrPos
+}
+
 // Getters
 
 function getImgById(id) {
@@ -364,6 +381,10 @@ function getImgData() {
   return gMeme.imgData
 }
 
+function getIsResizing() {
+  return gMeme.isResizing
+}
+
 // Dragging
 function startDragging(ev) {
   gMeme.isDragging = true
@@ -372,6 +393,7 @@ function startDragging(ev) {
 
 function stopDragging() {
   gMeme.isDragging = false
+  gMeme.isResizing = false
 }
 
 function dragObject(ev) {

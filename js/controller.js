@@ -330,16 +330,20 @@ function addTouchListeners() {
 }
 
 function addResize() {
-  window.addEventListener('resize', handleResize)
+  window.addEventListener('resize', handleResizeWindow)
 }
 
-function handleResize() {
+function handleResizeWindow() {
   updateCnavasWidth()
   handleCanvasRender()
 }
 
 function handelSelectObject(ev) {
-  if (checkIsOverResize(ev)) return
+  if (checkIsOverResize(ev)) {
+    setResizing()
+    startDragging(ev)
+    return
+  }
   const selectedLineIdx = selectLine(ev)
   if (selectedLineIdx >= 0) {
     setSelectedLine(selectedLineIdx)
@@ -362,6 +366,13 @@ function handelSelectObject(ev) {
 
 function handleDragObject(ev) {
   checkIsOverResize(ev)
+
+  if (getIsResizing()) {
+    resizeObject(ev)
+    handleCanvasRender()
+    return
+  }
+
   dragObject(ev)
   handleCanvasRender()
 }
@@ -471,14 +482,45 @@ function enableTools() {
 
 function checkIsOverResize(ev) {
   const mousePos = getEvPos(ev)
-  const selectedLine = getSelectedObject()
-  if (!selectedLine) return
-  const cornerPos = {
-    x: selectedLine.pos.x + selectedLine.width + 4,
-    y: selectedLine.pos.y + 7,
-  }
-  const distFromCorner = getDistAbs(mousePos, cornerPos)
+  const selectedObject = getSelectedObject()
+  if (!selectedObject) return
 
-  document.body.style.cursor = distFromCorner < 10 ? 'nwse-resize' : 'auto'
-  return distFromCorner < 10
+  const { pos, width, height } = selectedObject
+
+  if (selectedObject.txt) {
+    const cornerPos = {
+      x: pos.x + width + 4,
+      y: pos.y + 7,
+    }
+    const distFromCorner = getDistAbs(mousePos, cornerPos)
+    document.body.style.cursor = distFromCorner < 10 ? 'nwse-resize' : 'auto'
+    return distFromCorner < 10
+  } else {
+    const cornerPoses = [
+      {
+        x: pos.x - 5,
+        y: pos.y - 5,
+      },
+      {
+        x: pos.x + width,
+        y: pos.y - 5,
+      },
+      {
+        x: pos.x + width,
+        y: pos.y + 5 + height,
+      },
+      {
+        x: pos.x - 5,
+        y: pos.y + 5 + height,
+      },
+    ]
+
+    for (let i = 0; i < cornerPoses.length; i++) {
+      const distFromCorner = getDistAbs(mousePos, cornerPoses[i])
+      document.body.style.cursor = distFromCorner < 10 ? 'nwse-resize' : 'auto'
+      if (distFromCorner < 10) {
+        return true
+      }
+    }
+  }
 }
